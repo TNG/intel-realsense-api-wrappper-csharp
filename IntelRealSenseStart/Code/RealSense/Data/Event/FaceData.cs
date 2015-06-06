@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace IntelRealSenseStart.Code.RealSense.Data.Event
 {
@@ -18,7 +19,7 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
             emotionsData = null;
         }
 
-        protected Dictionary<FaceLandmark, DetectionPoint> DetectionPoints
+        public Dictionary<FaceLandmark, DetectionPoint> DetectionPoints
         {
             get { return detectionPoints; }
         }
@@ -48,6 +49,8 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
             get { return recognizedId; }
         }
 
+
+
         public class Builder
         {
             private readonly FaceData faceData;
@@ -69,6 +72,12 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
                 {
                     faceData.heartRate = pulseData.QueryHeartRate();
                 }
+                return this;
+            }
+
+            public Builder WithHeartRate(float heartRate)
+            {
+                faceData.heartRate = heartRate;
                 return this;
             }
 

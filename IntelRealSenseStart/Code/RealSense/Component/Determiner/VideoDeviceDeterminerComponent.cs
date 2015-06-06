@@ -65,11 +65,15 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
             {
                 throw new RealSenseException("No device info found for the selected device");
             }
-
-            nativeSense.SenseManager.captureManager.device.SetDepthConfidenceThreshold(1);
+            
+            nativeSense.SenseManager.captureManager.device.SetDepthConfidenceThreshold(1);   
             nativeSense.SenseManager.captureManager.device.SetMirrorMode(
                 PXCMCapture.Device.MirrorMode.MIRROR_MODE_HORIZONTAL);
-            nativeSense.SenseManager.captureManager.device.SetIVCAMFilterOption(6);
+
+            if (nativeSense.SenseManager.captureManager.device.QueryIVCAMFilterOption() != 6)
+            {
+                nativeSense.SenseManager.captureManager.device.SetIVCAMFilterOption(6);
+            }
         }
 
         public void Stop()
