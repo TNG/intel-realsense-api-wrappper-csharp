@@ -120,21 +120,18 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Face
             }
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         private void ForgetAboutRecognitionAction()
         {
             currentFaceRecognitionAction = nextFaceRecognitionAction;
             nextFaceRecognitionAction = RecognitionAction.DO_NOTHING;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RegisterFaces()
         {
             CheckRecognitionForAction();
             nextFaceRecognitionAction = RecognitionAction.REGISTER;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UnregisterFaces()
         {
             CheckRecognitionForAction();
