@@ -92,8 +92,8 @@
         RIGHT_CONTOUR_FAR_UP = 69,
 
         // Lower left eye brow
-        LOWER_LEFT_BROW_LEFT = 70,
-        LOWER_LEFT_BROW_MID = 71,
+        LOWER_LEFT_BROW_MID = 70,
+        LOWER_LEFT_BROW_LEFT = 71,
         LOWER_LEFT_BROW_RIGHT = 72,
 
         // Lower right eye brow
