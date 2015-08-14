@@ -1,5 +1,8 @@
-﻿namespace IntelRealSenseStart.Code.RealSense.Data.Event
+﻿using System;
+
+namespace IntelRealSenseStart.Code.RealSense.Data.Event
 {
+    [Serializable]
     public class EmotionsData
     {
         private EmotionData anger;

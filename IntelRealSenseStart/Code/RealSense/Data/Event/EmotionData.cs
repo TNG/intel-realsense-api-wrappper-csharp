@@ -1,4 +1,5 @@
-﻿using IntelRealSenseStart.Code.RealSense.Exception;
+﻿using System;
+using IntelRealSenseStart.Code.RealSense.Exception;
 
 namespace IntelRealSenseStart.Code.RealSense.Data.Event
 {
@@ -14,6 +15,7 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
         float Intensity { get; }
     }
 
+    [Serializable]
     public class AbsentEmotionData : EmotionData
     {
         private AbsentEmotionData()
@@ -56,6 +58,7 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
         }
     }
 
+    [Serializable]
     public class PresentEmotionData : EmotionData
     {
         private EmotionType type;

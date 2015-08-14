@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace IntelRealSenseStart.Code.RealSense.Data.Event
 {
+    [Serializable]
     public class FaceData
     {
         private readonly Dictionary<FaceLandmark, DetectionPoint> detectionPoints;

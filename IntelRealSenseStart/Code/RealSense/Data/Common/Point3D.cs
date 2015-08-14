@@ -1,5 +1,8 @@
-﻿namespace IntelRealSenseStart.Code.RealSense.Data.Common
+﻿using System;
+
+namespace IntelRealSenseStart.Code.RealSense.Data.Common
 {
+    [Serializable]
     public class Point3D
     {
         public float X { get; private set; }

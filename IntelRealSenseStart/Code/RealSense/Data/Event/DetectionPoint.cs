@@ -1,7 +1,9 @@
-﻿using IntelRealSenseStart.Code.RealSense.Data.Common;
+﻿using System;
+using IntelRealSenseStart.Code.RealSense.Data.Common;
 
 namespace IntelRealSenseStart.Code.RealSense.Data.Event
 {
+    [Serializable]
     public class DetectionPoint
     {
         // TODO confidence levels
