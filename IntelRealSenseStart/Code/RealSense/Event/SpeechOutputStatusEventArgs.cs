@@ -1,7 +1,9 @@
-﻿using IntelRealSenseStart.Code.RealSense.Event.Data;
+﻿using System;
+using IntelRealSenseStart.Code.RealSense.Event.Data;
 
 namespace IntelRealSenseStart.Code.RealSense.Event
 {
+    [Serializable]
     public class SpeechOutputStatusEventArgs
     {
         private SpeechOutputStatus status;

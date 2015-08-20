@@ -7,8 +7,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
         private const float DEFAULT_VOLUME = 0.2f;
 
         private float volume;
-        private String grammmar;
-
+        private string grammmar;
 
         public float Volume
         {
@@ -20,7 +19,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
             get { return grammmar != null; }
         }
 
-        public String Grammar
+        public string Grammar
         {
             get { return grammmar; }
         }
@@ -40,7 +39,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
                 return UsingDictation().WithVolume(DEFAULT_VOLUME);
             }
 
-            private Builder WithVolume(float volume)
+            public Builder WithVolume(float volume)
             {
                 configuration.volume = volume;
                 return this;
@@ -52,7 +51,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
                 return this;
             }
 
-            public Builder UsingGrammmar(String grammar)
+            public Builder UsingGrammmar(string grammar)
             {
                 configuration.grammmar = grammar;
                 return this;

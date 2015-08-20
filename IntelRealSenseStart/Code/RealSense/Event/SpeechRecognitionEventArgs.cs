@@ -4,6 +4,7 @@ using IntelRealSenseStart.Code.RealSense.Event.Data;
 
 namespace IntelRealSenseStart.Code.RealSense.Event
 {
+    [Serializable]
     public class SpeechRecognitionEventArgs
     {
         private List<SpeechRecognitionMatch> matches;

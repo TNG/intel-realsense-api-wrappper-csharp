@@ -1,5 +1,4 @@
-﻿using System;
-using IntelRealSenseStart.Code.RealSense.Exception;
+﻿using IntelRealSenseStart.Code.RealSense.Exception;
 
 namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
 {
@@ -12,7 +11,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
         private SpeechRecognitionConfiguration speechRecognitionConfiguration;
         private SpeechSynthesisConfiguration speechSynthesisConfiguration;
 
-        private RealSenseConfiguration()
+        public RealSenseConfiguration()
         {
             baseConfiguration = BaseConfiguration.DEFAULT_CONFIGURATION;
             imageConfiguration = ImageConfiguration.DEFAULT_CONFIGURATION;

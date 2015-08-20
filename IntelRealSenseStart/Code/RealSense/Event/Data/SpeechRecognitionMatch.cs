@@ -2,18 +2,19 @@
 
 namespace IntelRealSenseStart.Code.RealSense.Event.Data
 {
+    [Serializable]
     public class SpeechRecognitionMatch
     {
-        private readonly String sentence;
+        private readonly string sentence;
         private readonly int confidence;
 
-        public SpeechRecognitionMatch(String sentence, int confidence)
+        public SpeechRecognitionMatch(string sentence, int confidence)
         {
             this.sentence = sentence;
             this.confidence = confidence;
         }
 
-        public String Sentence
+        public string Sentence
         {
             get { return sentence; }
         }
