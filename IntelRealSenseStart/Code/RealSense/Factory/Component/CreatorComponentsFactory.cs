@@ -49,11 +49,6 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
         public UserIdsImageCreator.Builder UserIdsImageCreator()
         {
             return new UserIdsImageCreator.Builder();
-        }
-
-        public EmotionsImageCreator.Builder EmotionsImageCreator()
-        {
-            return new EmotionsImageCreator.Builder();
-        }
+        } 
     }
 }

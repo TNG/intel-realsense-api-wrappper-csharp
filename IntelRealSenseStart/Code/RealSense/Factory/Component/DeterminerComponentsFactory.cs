@@ -34,12 +34,7 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
         public PulseDeterminerComponent.Builder Pulse()
         {
             return new PulseDeterminerComponent.Builder();
-        }
-
-        public EmotionDeterminerComponent.Builder Emotion()
-        {
-            return new EmotionDeterminerComponent.Builder();
-        }
+        } 
 
         public VideoDeviceDeterminerComponent.Builder VideoDevice()
         {

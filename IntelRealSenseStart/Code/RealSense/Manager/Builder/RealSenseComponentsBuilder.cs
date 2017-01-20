@@ -27,7 +27,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         }
 
         public HandsDeterminerComponent CreateHandsDeterminerComponent()
-        {
+        {   
             return factory.Components.Determiner.Hands()
                 .WithFactory(factory)
                 .WithNativeSense(nativeSense)
@@ -41,7 +41,6 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
                 .WithFaceComponent(CreateFaceLandmarksDeterminerComponent().Build())
                 .WithFaceComponent(CreateFaceRecognitionDeterminerComponent().Build())
                 .WithFaceComponent(CreatePulseDeterminerComponent().Build())
-                .WithFaceComponent(CreateEmotionDeterminerComponet().Build())
                 .WithFactory(factory)
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
@@ -64,14 +63,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         {
             return factory.Components.Determiner.Pulse()
                 .WithConfiguration(configuration);
-        }
-
-        private EmotionDeterminerComponent.Builder CreateEmotionDeterminerComponet()
-        {
-            return factory.Components.Determiner.Emotion()
-                .WithNativeSense(nativeSense)
-                .WithConfiguration(configuration);
-        }
+        } 
 
         public ImageDeterminerComponent CreatePictureDeterminerComponent()
         {
@@ -110,7 +102,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         public HandsBuilder getHandsJointsBuilder()
         {
             return factory.Components.Creator.HandsJointsBuilder().Build();
-        }
+        } 
 
         public BasicImageCreator CreateBasicImageCreatorComponent()
         {
@@ -138,14 +130,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
             return factory.Components.Creator.UserIdsImageCreator()
                 .WithRealSenseConfiguration(configuration)
                 .Build();
-        }
-
-        public EmotionsImageCreator CreateEmotionsImageCreator()
-        {
-            return factory.Components.Creator.EmotionsImageCreator()
-                .WithFacesBuilder(GetFacesBuilder())
-                .Build();
-        }
+        } 
 
         public OverallImageCreator CreateOverallImageCreator(ImageCreator[] imageCreators)
         {

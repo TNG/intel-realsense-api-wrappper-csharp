@@ -76,8 +76,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
                 componentsBuilder.CreateBasicImageCreatorComponent(),
                 componentsBuilder.CreateHandsImageCreatorComponent(),
                 componentsBuilder.CreateFaceImageCreatorComponent(),
-                componentsBuilder.CreateUserIdsImageCreator(),
-                componentsBuilder.CreateEmotionsImageCreator()
+                componentsBuilder.CreateUserIdsImageCreator()
             });
         }
 
@@ -98,11 +97,10 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
         }
 
         private void StartDeterminer()
-        {
+        {   
             try
             {
                 determinerStatus = DeterminerStatus.STARTING;
-
                 GetActiveComponents().Do(component => component.EnableFeatures());
                 nativeSense.SenseManager.Init();
                 (determinerThread = new Thread(StartDetection)).Start();
