@@ -1,6 +1,7 @@
 ﻿using IntelRealSenseStart.Code.RealSense.Component.Creator;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
+using IntelRealSenseStart.Code.RealSense.Data.Event;
 using IntelRealSenseStart.Code.RealSense.Factory;
 using FacesData = IntelRealSenseStart.Code.RealSense.Data.Event.FacesData;
 using HandsData = IntelRealSenseStart.Code.RealSense.Data.Event.HandsData;
@@ -28,7 +29,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
 
         public HandsData Hands
         {
-            get { return handsJointsBuilder.GetHandsData(determinerData.HandsData.Hands); }
+            get { return handsJointsBuilder.GetHandsData(determinerData.HandsData.Hands, determinerData.HandsData.Gestures); }
         }
 
         public class Builder
@@ -60,7 +61,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
             {
                 this.handsJointsBuilder = handsJointsBuilder;
                 return this;
-            }
+            } 
 
             public Builder WithOverallImageCreator(OverallImageCreator overallImageCreator)
             {
@@ -89,7 +90,6 @@ namespace IntelRealSenseStart.Code.RealSense.Event
                     .Build();
                 frameEventArgs.facesLandmarksBuilder = facesLandmarksBuilder;
                 frameEventArgs.handsJointsBuilder = handsJointsBuilder;
-
                 return frameEventArgs;
             }
         }

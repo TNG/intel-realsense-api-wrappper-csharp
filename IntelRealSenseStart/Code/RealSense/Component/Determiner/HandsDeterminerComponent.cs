@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gestures;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
 using IntelRealSenseStart.Code.RealSense.Factory;
@@ -10,15 +12,16 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 {
     public class HandsDeterminerComponent : FrameDeterminerComponent
     {
+        private List<GestureComponent> gestureComponents; 
         private readonly RealSenseConfiguration configuration;
-
         private readonly RealSenseFactory factory;
         private readonly NativeSense nativeSense;
 
         private PXCMHandData handData;
 
         private HandsDeterminerComponent(RealSenseFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration)
-        {
+        {   
+            gestureComponents = new List<GestureComponent>();
             this.factory = factory;
             this.nativeSense = nativeSense;
             this.configuration = configuration;
@@ -52,16 +55,33 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
         private void ConfigureHandOptions(PXCMHandConfiguration handConfiguration)
         {
             // TODO no more hardcoding
-            handConfiguration.DisableAllGestures();
             if (configuration.HandsDetection.SegmentationImageEnabled)
             {
                 handConfiguration.EnableSegmentationImage(true);
             }
+            if (configuration.HandsDetection.GestureNames.Count <= 0) return;
+            gestureComponents = CreateGestureComponents();
+            ConfigureComponents(handConfiguration);
+        } 
+
+        private List<GestureComponent> CreateGestureComponents()
+        {   
+            List<GestureComponent> gestureComponentsList = new List<GestureComponent>();
+            foreach (GestureTypes.GestureTypesEnum gestureName in configuration.HandsDetection.GestureNames)
+            {  
+                gestureComponentsList.Add(GestureComponent.Create().WithGestureName(gestureName).Build());
+            }
+            return gestureComponentsList;
+        }
+
+        private void ConfigureComponents(PXCMHandConfiguration handConfiguration)
+        {
+            gestureComponents.Do(gestureComponent => gestureComponent.Configure(handConfiguration));
         }
 
         public void Stop()
         {
-            // Nothing to doa
+            // Nothing to do
         }
 
         public void Process(DeterminerData.Builder determinerData)
@@ -77,9 +97,16 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
         }
 
         private HandsDeterminerData.Builder GetHandsData()
+        {   
+            var handsDeterminerData = factory.Data.Determiner.Hands();
+            handsDeterminerData.WithHands(GetIndividualHandSamples().Select(GetIndividualHandData));
+            ProcessComponents(handsDeterminerData);
+            return handsDeterminerData;
+        }
+
+        private void ProcessComponents(HandsDeterminerData.Builder handsDeterminerData)
         {
-            return factory.Data.Determiner.Hands().WithHands(
-                GetIndividualHandSamples().Select(GetIndividualHandData));
+            gestureComponents.Do(gestureComponent => gestureComponent.Process(handData, handsDeterminerData, factory));
         }
 
         private IEnumerable<PXCMHandData.IHand> GetIndividualHandSamples()

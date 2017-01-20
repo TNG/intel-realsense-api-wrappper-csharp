@@ -18,14 +18,22 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
             this.factory = factory;
         }
 
-        public HandsData GetHandsData(List<Data.Determiner.HandDeterminerData> handsData)
+        public HandsData GetHandsData(List<HandDeterminerData> handsData, List<GestureDeterminerData> gesturesData)
         {
             var handsJoints = factory.Data.Events.Hands();
             handsData.Do(handData => handsJoints.WithFaceLandmarks(GetHandJoints(handData)));
+            gesturesData.Do(gestureData => handsJoints.WithGestureData(GetGestureData(gestureData)));
             return handsJoints.Build();
         }
 
-        private HandData.Builder GetHandJoints(Data.Determiner.HandDeterminerData handDeterminerData)
+        private GestureData.Builder GetGestureData(GestureDeterminerData gestureData)
+        {
+            var gesture = factory.Data.Events.Gesture();
+            gesture.WithGestureData(gestureData.Gesture);
+            return gesture;
+        }
+
+        private HandData.Builder GetHandJoints(HandDeterminerData handDeterminerData)
         {
             var handJoints = factory.Data.Events.Hand();
             0.To(handDeterminerData.Joints.Count - 1).ToArray().Do(index =>

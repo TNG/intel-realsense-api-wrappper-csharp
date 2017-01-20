@@ -3,7 +3,12 @@
 namespace IntelRealSenseStart.Code.RealSense.Factory.Data
 {
     public class EventDataFactory
-    {
+    { 
+        public GestureData.Builder Gesture()
+        {
+            return new GestureData.Builder();
+        }
+
         public FacesData.Builder Faces()
         {
            return new FacesData.Builder(); 
