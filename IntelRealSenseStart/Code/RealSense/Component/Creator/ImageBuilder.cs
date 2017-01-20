@@ -57,9 +57,6 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
                 case ImageOverlay.UserIds:
                     AddUserIds();
                     break;
-                case ImageOverlay.Emotions:
-                    AddEmotions();
-                    break;
             }
             return this;
         }
@@ -114,15 +111,6 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
                 throw new RealSenseException("Cannot use user IDs since face detection is not configured");
             }
             imageConfigurationBuilder.WithOverlay(ImageOverlay.UserIds);
-        }
-
-        private void AddEmotions()
-        {
-            if (!realSenseConfiguration.FaceDetectionEnabled || !realSenseConfiguration.FaceDetection.UseEmotions)
-            {
-                throw new RealSenseException("Cannot use emotions since face or emotion detection is not configured");
-            }
-            imageConfigurationBuilder.WithOverlay(ImageOverlay.Emotions);
         }
 
         public Bitmap Create()
