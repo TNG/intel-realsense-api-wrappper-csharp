@@ -33,5 +33,10 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Data
         {
             return new FaceDeterminerData.Builder();
         }
+
+        public GestureDeterminerData.Builder Gesture()
+        {
+            return new GestureDeterminerData.Builder();
+        }
     }
 }
