@@ -43,7 +43,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
             var properties = devices.First(selectorFunction);
             if (properties == null)
             {
-                throw new RealSenseException(String.Format("No camera with the specified selector is attached"));
+                throw new RealSenseException("No camera with the specified selector is attached");
             }
             return properties;
         }
@@ -51,6 +51,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
         public void Configure()
         {
             PXCMCapture.DeviceInfo deviceInfo;
+
             var queryCaptureManager = nativeSense.SenseManager.QueryCaptureManager();
             device = queryCaptureManager.QueryDevice();
 

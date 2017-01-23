@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using IntelRealSenseStart.Code.RealSense.Component.Common;
@@ -102,7 +103,10 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
             {
                 determinerStatus = DeterminerStatus.STARTING;
                 GetActiveComponents().Do(component => component.EnableFeatures());
-                nativeSense.SenseManager.Init();
+                if (nativeSense.SenseManager.Init() < pxcmStatus.PXCM_STATUS_NO_ERROR)
+                {
+                    Debug.WriteLine("Init of Sense Manager failed. Please check if the attached RealSense Camera works with the Samples. If not, try switching the camera off and on.");
+                }
                 (determinerThread = new Thread(StartDetection)).Start();
             }
             catch (RealSenseException e)

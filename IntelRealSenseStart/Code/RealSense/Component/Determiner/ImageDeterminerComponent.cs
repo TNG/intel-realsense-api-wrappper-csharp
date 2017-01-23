@@ -53,7 +53,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         public void Stop()
         {
-            // Nothing to doa
+            // Nothing to do
         }
 
         public void Process(DeterminerData.Builder determinerData)

@@ -24,12 +24,12 @@ namespace IntelRealSenseStart.Code.RealSense.Event
 
         public FacesData Faces
         {
-            get { return facesLandmarksBuilder.GetFacesData(determinerData.FacesData.Faces); }
+            get { return facesLandmarksBuilder.GetFacesData(determinerData?.FacesData?.Faces); }
         }
 
         public HandsData Hands
         {
-            get { return handsJointsBuilder.GetHandsData(determinerData.HandsData.Hands, determinerData.HandsData.Gestures); }
+            get { return handsJointsBuilder.GetHandsData(determinerData?.HandsData?.Hands, determinerData?.HandsData?.Gestures); }
         }
 
         public class Builder

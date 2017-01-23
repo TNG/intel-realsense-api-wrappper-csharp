@@ -21,7 +21,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
         public FacesData GetFacesData(List<FaceDeterminerData> facesDeterminerData)
         {
             var facesLandmarks = factory.Data.Events.Faces();
-            facesDeterminerData.Do(faceData => facesLandmarks.WithFaceLandmarks(GetFaceData(faceData)));
+            facesDeterminerData?.Do(faceData => facesLandmarks.WithFaceLandmarks(GetFaceData(faceData)));
             return facesLandmarks.Build();
         }
 

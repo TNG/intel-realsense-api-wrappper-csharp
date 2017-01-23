@@ -21,8 +21,8 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
         public HandsData GetHandsData(List<HandDeterminerData> handsData, List<GestureDeterminerData> gesturesData)
         {
             var handsJoints = factory.Data.Events.Hands();
-            handsData.Do(handData => handsJoints.WithFaceLandmarks(GetHandJoints(handData)));
-            gesturesData.Do(gestureData => handsJoints.WithGestureData(GetGestureData(gestureData)));
+            handsData?.Do(handData => handsJoints.WithFaceLandmarks(GetHandJoints(handData)));
+            gesturesData?.Do(gestureData => handsJoints.WithGestureData(GetGestureData(gestureData)));
             return handsJoints.Build();
         }
 
