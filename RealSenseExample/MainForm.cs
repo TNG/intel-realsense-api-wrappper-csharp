@@ -34,7 +34,6 @@ namespace RealSenseExample
         private Status status = Status.IDLE;
         private String detectedName;
 
-        private EmotionType currentEmotionType;
         private DateTime emotionStartTime;
         private bool emotionTriggered;
         private readonly TimeSpan timeSpanUntilEmotionTrigger = new TimeSpan(0, 0, 3);
@@ -64,7 +63,6 @@ namespace RealSenseExample
                 .WithHandsDetection(factory.HandsDetection().WithSegmentationImage())
                 .WithFaceDetection(factory.FaceDetection()
                     .UsingLandmarks()
-                    .UsingEmotions()
                     .UsingFaceIdentification(factory.FaceIdentification()
                         .WithFaceIdentificationMode(FaceIdentificationMode.ON_DEMAND)
                         .WithDataBasePath(FACE_DATABASE_PATH)
