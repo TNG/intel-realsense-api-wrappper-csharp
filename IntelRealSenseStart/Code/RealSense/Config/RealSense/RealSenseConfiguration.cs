@@ -10,6 +10,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
         private FaceConfiguration faceConfiguration;
         private SpeechRecognitionConfiguration speechRecognitionConfiguration;
         private SpeechSynthesisConfiguration speechSynthesisConfiguration;
+        private PersonTrackingConfiguration personTrackingConfiguration;
 
         public RealSenseConfiguration()
         {
@@ -25,6 +26,23 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
         public ImageConfiguration Image
         {
             get { return imageConfiguration; }
+        }
+
+        public bool PersonTrackingEnabled
+        {
+            get { return personTrackingConfiguration != null; }
+        }
+
+        public PersonTrackingConfiguration PersonTracking
+        {
+            get
+            {
+                if (personTrackingConfiguration == null)
+                {
+                    throw new RealSenseException("Person Tracking is not enabled, but tried to access it");
+                }
+                return personTrackingConfiguration;
+            }
         }
 
         public bool HandsDetectionEnabled
@@ -97,7 +115,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
 
         public bool NeedsFrame
         {
-            get { return HandsDetectionEnabled || FaceDetectionEnabled || Image.ColorEnabled || Image.DepthEnabled; }
+            get { return HandsDetectionEnabled || FaceDetectionEnabled || Image.ColorEnabled || Image.DepthEnabled || PersonTrackingEnabled; }
         }
 
         public class Builder
@@ -142,6 +160,12 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
             public Builder WithImage(ImageConfiguration.Builder imageConfiguration)
             {
                 configuration.imageConfiguration = imageConfiguration.Build();
+                return this;
+            }
+
+            public Builder WithPersonTracking(PersonTrackingConfiguration.Builder personTrackingConfiguration)
+            {
+                configuration.personTrackingConfiguration = personTrackingConfiguration.Build();
                 return this;
             }
 

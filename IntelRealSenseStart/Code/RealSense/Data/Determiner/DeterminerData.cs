@@ -7,6 +7,7 @@
         private ImageData imageData;
         private HandsDeterminerData handsData;
         private FacesData facesData;
+        private SkeletonsDeterminerData skeletonsDeterminerData;
 
         private DeterminerData()
         {
@@ -30,6 +31,11 @@
         public FacesData FacesData
         {
             get { return facesData; }
+        }
+
+        public SkeletonsDeterminerData SkeletonsDeterminerData
+        {
+            get { return skeletonsDeterminerData; }
         }
 
         public class Builder
@@ -62,6 +68,12 @@
             public Builder WithFacesData(FacesData.Builder facesData)
             {
                 determinerData.facesData = facesData.Build();
+                return this;
+            }
+
+            public Builder WithSkeletonsData(SkeletonsDeterminerData.Builder skeletonsData)
+            {
+                determinerData.skeletonsDeterminerData = skeletonsData.Build();
                 return this;
             }
 

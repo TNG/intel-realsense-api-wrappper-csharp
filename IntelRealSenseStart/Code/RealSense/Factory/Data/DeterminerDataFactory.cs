@@ -38,5 +38,15 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Data
         {
             return new GestureDeterminerData.Builder();
         }
+
+        public SkeletonsDeterminerData.Builder Skeletons()
+        {
+            return new SkeletonsDeterminerData.Builder();
+        }
+
+        public SkeletonDeterminerData.Builder Skeleton()
+        {
+            return new SkeletonDeterminerData.Builder();
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
     {
         private readonly RealSenseFactory factory;
 
-            public FacesBuilder(RealSenseFactory factory)
+        public FacesBuilder(RealSenseFactory factory)
         {
             this.factory = factory;
         }

@@ -57,5 +57,10 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Configuration
         {
             return new StreamConfiguration.Builder();
         }
+
+        public PersonTrackingConfiguration.Builder PersonTracking()
+        {
+            return new PersonTrackingConfiguration.Builder();
+        }
     }
 }

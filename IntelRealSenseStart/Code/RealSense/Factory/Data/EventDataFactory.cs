@@ -19,6 +19,16 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Data
             return new FaceData.Builder();
         }
 
+        public SkeletonsData.Builder Skeletons()
+        {
+            return new SkeletonsData.Builder();
+        }
+
+        public SkeletonData.Builder Skeleton()
+        {
+            return new SkeletonData.Builder();
+        }
+
         public HandsData.Builder Hands()
         {
             return new HandsData.Builder();

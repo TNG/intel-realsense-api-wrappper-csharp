@@ -49,6 +49,11 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
         public UserIdsImageCreator.Builder UserIdsImageCreator()
         {
             return new UserIdsImageCreator.Builder();
+        }
+
+        public SkeletonsBuilder.Builder SkeletonsBuilder()
+        {
+            return new SkeletonsBuilder.Builder(realSenseFactory);
         } 
     }
 }

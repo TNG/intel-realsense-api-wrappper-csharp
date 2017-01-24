@@ -21,6 +21,11 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
             return new FaceDeterminerComponent.Builder();
         }
 
+        public PersonDeterminerComponent.Builder Skeletons()
+        {
+            return new PersonDeterminerComponent.Builder();
+        }
+
         public FaceLandmarksDeterminerComponent.Builder FaceLandmarks()
         {
             return new FaceLandmarksDeterminerComponent.Builder();

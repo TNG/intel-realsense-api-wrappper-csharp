@@ -14,6 +14,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
 
         private FacesBuilder facesLandmarksBuilder;
         private HandsBuilder handsJointsBuilder;
+        private SkeletonsBuilder skeletonsBuilder;
 
         private DeterminerData determinerData;
 
@@ -32,13 +33,19 @@ namespace IntelRealSenseStart.Code.RealSense.Event
             get { return handsJointsBuilder.GetHandsData(determinerData?.HandsData?.Hands, determinerData?.HandsData?.Gestures); }
         }
 
+        public SkeletonsData Skeletons
+        {
+            get { return skeletonsBuilder.GetSkeletonsData(determinerData?.SkeletonsDeterminerData?.Skeletons); }
+        }
+
         public class Builder
         {
             private readonly FrameEventArgs frameEventArgs;
 
             private FacesBuilder facesLandmarksBuilder;
             private HandsBuilder handsJointsBuilder;
-            
+            private SkeletonsBuilder skeletonsBuilder;
+
             private readonly ImageBuilder.Builder handsImageBuilderBuilder;
             private OverallImageCreator overallImageCreator;
             
@@ -61,7 +68,13 @@ namespace IntelRealSenseStart.Code.RealSense.Event
             {
                 this.handsJointsBuilder = handsJointsBuilder;
                 return this;
-            } 
+            }
+
+            public Builder WithSkeletonsBuilder(SkeletonsBuilder skeletonsBuilder)
+            {
+                this.skeletonsBuilder = skeletonsBuilder;
+                return this;
+            }
 
             public Builder WithOverallImageCreator(OverallImageCreator overallImageCreator)
             {
@@ -90,6 +103,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
                     .Build();
                 frameEventArgs.facesLandmarksBuilder = facesLandmarksBuilder;
                 frameEventArgs.handsJointsBuilder = handsJointsBuilder;
+                frameEventArgs.skeletonsBuilder = skeletonsBuilder;
                 return frameEventArgs;
             }
         }

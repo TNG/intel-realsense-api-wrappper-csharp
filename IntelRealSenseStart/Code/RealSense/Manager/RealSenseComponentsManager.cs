@@ -30,6 +30,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
         private readonly OverallImageCreator overallImageCreator;
         private readonly FacesBuilder facesLandmarksBuilder;
         private readonly HandsBuilder handsJointsBuilder;
+        private readonly SkeletonsBuilder skeletonsBuilder;
 
         private readonly RealSenseFactory factory;
         private readonly RealSenseConfiguration realSenseConfiguration;
@@ -54,6 +55,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
             overallImageCreator = GetImageCreator(componentsBuilder);
             facesLandmarksBuilder = componentsBuilder.GetFacesBuilder();
             handsJointsBuilder = componentsBuilder.getHandsJointsBuilder();
+            skeletonsBuilder = componentsBuilder.GetSkeletonsBuilder();
         }
 
         private IEnumerable<RealSenseComponent> GetComponents(RealSenseComponentsBuilder componentsBuilder)
@@ -62,6 +64,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
             {
                 componentsBuilder.CreateHandsDeterminerComponent(), 
                 componentsBuilder.CreateFaceDeterminerComponent(), 
+                componentsBuilder.CreateSkeletonDeterminerComponent(),
                 componentsBuilder.CreatePictureDeterminerComponent(), 
                 componentsBuilder.CreateDeviceDeterminerComponent(),
                 componentsBuilder.CreateSpeechRecognitionDeterminerComponent(),
@@ -206,6 +209,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
                 .WithOverallImageCreator(overallImageCreator)
                 .WithFacesLandmarksBuilder(facesLandmarksBuilder)
                 .WithHandsJointsBuilder(handsJointsBuilder)
+                .WithSkeletonsBuilder(skeletonsBuilder)
                 .WithRealSenseConfiguration(realSenseConfiguration)
                 .WithDeterminerData(determinerDataBuilder);
         }

@@ -47,6 +47,15 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
                 .Build();
         }
 
+        public PersonDeterminerComponent CreateSkeletonDeterminerComponent()
+        {
+            return factory.Components.Determiner.Skeletons()
+                .WithFactory(factory)
+                .WithNativeSense(nativeSense)
+                .WithConfiguration(configuration)
+                .Build();
+        }
+
         private FaceLandmarksDeterminerComponent.Builder CreateFaceLandmarksDeterminerComponent()
         {
             return factory.Components.Determiner.FaceLandmarks()
@@ -102,7 +111,12 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         public HandsBuilder getHandsJointsBuilder()
         {
             return factory.Components.Creator.HandsJointsBuilder().Build();
-        } 
+        }
+
+        public SkeletonsBuilder GetSkeletonsBuilder()
+        {
+            return factory.Components.Creator.SkeletonsBuilder().Build();
+        }
 
         public BasicImageCreator CreateBasicImageCreatorComponent()
         {
