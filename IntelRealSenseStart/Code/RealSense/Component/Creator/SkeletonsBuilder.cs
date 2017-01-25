@@ -16,16 +16,16 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
             this.factory = factory;
         }
 
-        public SkeletonsData GetSkeletonsData(List<SkeletonDeterminerData> skeletonsDeterminerData)
+        public RealSenseSkeletonsData GetSkeletonsData(List<SkeletonDeterminerData> skeletonsDeterminerData)
         {
-            SkeletonsData.Builder skeletonsData = factory.Data.Events.Skeletons();
+            RealSenseSkeletonsData.Builder skeletonsData = factory.Data.Events.Skeletons();
             skeletonsDeterminerData?.Do(skeletonDeterminerData => skeletonsData.WithSkeletonData(GetSkeletonData(skeletonDeterminerData)));
             return skeletonsData.Build();
         }
 
-        private SkeletonData.Builder GetSkeletonData(SkeletonDeterminerData skeletonDeterminerData)
+        private RealSenseSkeletonData.Builder GetSkeletonData(SkeletonDeterminerData skeletonDeterminerData)
         {
-            SkeletonData.Builder skeletonData = factory.Data.Events.Skeleton();
+            RealSenseSkeletonData.Builder skeletonData = factory.Data.Events.Skeleton();
             if (skeletonDeterminerData.SkeletonPoints != null)
             {
                 0.To(skeletonDeterminerData.SkeletonPoints.Length - 1).ToArray().Do(index =>

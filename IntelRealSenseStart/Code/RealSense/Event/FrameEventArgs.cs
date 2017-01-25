@@ -33,7 +33,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
             get { return handsJointsBuilder.GetHandsData(determinerData?.HandsData?.Hands, determinerData?.HandsData?.Gestures); }
         }
 
-        public SkeletonsData Skeletons
+        public RealSenseSkeletonsData RealSenseSkeletons
         {
             get { return skeletonsBuilder.GetSkeletonsData(determinerData?.SkeletonsDeterminerData?.Skeletons); }
         }

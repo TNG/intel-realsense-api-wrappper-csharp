@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace IntelRealSenseStart.Code.RealSense.Data.Event
 {
     [Serializable]
-    public class SkeletonData
+    public class RealSenseSkeletonData
     {
         private readonly Dictionary<SkeletonLandmark, DetectionPoint> detectionPoints;
 
         private int personId;
 
-        private SkeletonData()
+        private RealSenseSkeletonData()
         {
             detectionPoints = new Dictionary<SkeletonLandmark, DetectionPoint>();
         }
@@ -32,28 +32,28 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
 
         public class Builder
         {
-            private readonly SkeletonData skeletonData;
+            private readonly RealSenseSkeletonData realSenseSkeletonData;
 
             public Builder()
             {
-                skeletonData = new SkeletonData();
+                realSenseSkeletonData = new RealSenseSkeletonData();
             }
 
             public Builder WithDetectionPoint(SkeletonLandmark landmark, DetectionPoint.Builder detectionPoint)
             {
-                skeletonData.detectionPoints[landmark] = detectionPoint.Build();
+                realSenseSkeletonData.detectionPoints[landmark] = detectionPoint.Build();
                 return this;
             }
 
             public Builder WithPersonId(int personId)
             {
-                skeletonData.personId = personId;
+                realSenseSkeletonData.personId = personId;
                 return this;
             }
 
-            public SkeletonData Build()
+            public RealSenseSkeletonData Build()
             {
-                return skeletonData;
+                return realSenseSkeletonData;
             }
         }
     }

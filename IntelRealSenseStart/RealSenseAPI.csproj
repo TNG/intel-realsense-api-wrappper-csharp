@@ -94,7 +94,6 @@
     <Compile Include="Code\RealSense\Component\Determiner\Gesture\GestureComponent.cs" />
     <Compile Include="Code\RealSense\Component\Determiner\Gesture\GestureTypes.cs" />
     <Compile Include="Code\RealSense\Component\Determiner\PersonDeterminerComponent.cs" />
-    <Compile Include="Code\RealSense\Component\Determiner\Person\PersonTrackingMode.cs" />
     <Compile Include="Code\RealSense\Component\Determiner\Person\SkeletonComponent.cs" />
     <Compile Include="Code\RealSense\Component\Determiner\Person\TrackingComponent.cs" />
     <Compile Include="Code\RealSense\Component\Determiner\VideoDeviceDeterminerComponent.cs" />
@@ -113,9 +112,9 @@
     <Compile Include="Code\RealSense\Data\Determiner\SkeletonDeterminerData.cs" />
     <Compile Include="Code\RealSense\Data\Determiner\SkeletonsDeterminerData.cs" />
     <Compile Include="Code\RealSense\Data\Event\GestureData.cs" />
-    <Compile Include="Code\RealSense\Data\Event\SkeletonData.cs" />
+    <Compile Include="Code\RealSense\Data\Event\RealSenseSkeletonData.cs" />
     <Compile Include="Code\RealSense\Data\Event\SkeletonLandmark.cs" />
-    <Compile Include="Code\RealSense\Data\Event\SkeletonsData.cs" />
+    <Compile Include="Code\RealSense\Data\Event\RealSenseSkeletonsData.cs" />
     <Compile Include="Code\RealSense\Data\Properties\SpeechSynthesisModuleProperties.cs" />
     <Compile Include="Code\RealSense\Data\Properties\SpeechSynthesisProfileProperties.cs" />
     <Compile Include="Code\RealSense\Data\Properties\SpeechRecognitionProfileProperties.cs" />
