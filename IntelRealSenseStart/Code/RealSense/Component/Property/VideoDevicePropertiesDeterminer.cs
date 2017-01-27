@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Data.Properties;
@@ -27,22 +27,32 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
         private void DetermineVideoDeviceProperties(VideoProperties.Builder videoProperties)
         {
             var videoDeviceDescription = CreateVideoDeviceDescription();
-            for (int i = 0;; i++)
+            for (int i = 0; ; i++)
             {
                 PXCMSession.ImplDesc deviceDescription;
                 PXCMCapture deviceCapture;
-                PXCMCapture.DeviceInfo deviceInfo;
-                PXCMCapture.Device device;
-
-                if (!GetDeviceData(videoDeviceDescription, i, out deviceDescription, out deviceCapture,
-                    out deviceInfo, out device))
+                
+                if (session.QueryImpl(videoDeviceDescription, i, out deviceDescription) < pxcmStatus.PXCM_STATUS_NO_ERROR)
                 {
                     break;
                 }
+                if (session.CreateImpl<PXCMCapture>(deviceDescription, out deviceCapture) < pxcmStatus.PXCM_STATUS_NO_ERROR)
+                {
+                    continue;
+                }
+                for (int j = 0; ; j++)
+                {
+                    PXCMCapture.DeviceInfo deviceInfo;
+                    if (deviceCapture.QueryDeviceInfo(j, out deviceInfo) < pxcmStatus.PXCM_STATUS_NO_ERROR)
+                    {
+                        break;
+                    }
+                    PXCMCapture.Device device;
+                    device = deviceCapture.CreateDevice(deviceInfo.didx);
+                    videoProperties.WithVideoDevice(GetDevicePropertiesFrom(deviceInfo, device));
+                }
 
-                videoProperties.WithVideoDevice(GetDevicePropertiesFrom(deviceInfo, device));
-
-                deviceCapture.Dispose();
+                deviceCapture?.Dispose();
             }
         }
 
@@ -52,29 +62,6 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
             videoDeviceDescription.group = PXCMSession.ImplGroup.IMPL_GROUP_SENSOR;
             videoDeviceDescription.subgroup = PXCMSession.ImplSubgroup.IMPL_SUBGROUP_VIDEO_CAPTURE;
             return videoDeviceDescription;
-        }
-
-        private bool GetDeviceData(PXCMSession.ImplDesc videoDeviceDescription, int deviceIndex,
-            out PXCMSession.ImplDesc deviceDescription, out PXCMCapture deviceCapture,
-            out PXCMCapture.DeviceInfo deviceInfo, out PXCMCapture.Device device)
-        {
-            deviceCapture = null;
-            deviceInfo = null;
-            device = null;
-
-            if (session.QueryImpl(videoDeviceDescription, deviceIndex, out deviceDescription) <
-                pxcmStatus.PXCM_STATUS_NO_ERROR)
-            {
-                return false;
-            }
-
-            session.CreateImpl(deviceDescription, out deviceCapture);
-            if (deviceCapture == null || deviceCapture.QueryDeviceInfo(0, out deviceInfo) < pxcmStatus.PXCM_STATUS_NO_ERROR)
-            {
-                return false;
-            }
-            device = deviceCapture.CreateDevice(deviceInfo.didx);
-            return device != null;
         }
 
         private VideoDeviceProperties.Builder GetDevicePropertiesFrom(PXCMCapture.DeviceInfo deviceInfo, PXCMCapture.Device device)
