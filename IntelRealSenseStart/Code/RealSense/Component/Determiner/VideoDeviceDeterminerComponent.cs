@@ -54,7 +54,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
             var queryCaptureManager = nativeSense.SenseManager.QueryCaptureManager();
             device = queryCaptureManager.QueryDevice();
-
+            
             if (device == null)
             {
                 throw new RealSenseException("No device found for the selected device");

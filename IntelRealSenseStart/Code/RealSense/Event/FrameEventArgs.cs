@@ -36,7 +36,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
         public RealSenseSkeletonsData RealSenseSkeletons
         {
             get { return skeletonsBuilder.GetSkeletonsData(determinerData?.SkeletonsDeterminerData?.Skeletons); }
-        }
+        } 
 
         public class Builder
         {
@@ -44,7 +44,7 @@ namespace IntelRealSenseStart.Code.RealSense.Event
 
             private FacesBuilder facesLandmarksBuilder;
             private HandsBuilder handsJointsBuilder;
-            private SkeletonsBuilder skeletonsBuilder;
+            private SkeletonsBuilder skeletonsBuilder; 
 
             private readonly ImageBuilder.Builder handsImageBuilderBuilder;
             private OverallImageCreator overallImageCreator;

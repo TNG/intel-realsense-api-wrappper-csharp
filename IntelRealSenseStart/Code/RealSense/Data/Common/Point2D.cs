@@ -14,6 +14,12 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Common
         {
         }
 
+        public Point2D(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+
         public class Builder
         {
             private readonly Point2D point2D;
@@ -34,6 +40,13 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Common
             {
                 point2D.X = point.x;
                 point2D.Y = point.y;
+                return this;
+            }
+
+            public Builder FromPoint3D(Point3D point)
+            {
+                point2D.X = point.X;
+                point2D.Y = point.Y;
                 return this;
             }
             

@@ -45,6 +45,12 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
                 return this;
             }
 
+            public Builder WithDetectionPoint(SkeletonLandmark landmark, DetectionPoint detectionPoint)
+            {
+                realSenseSkeletonData.detectionPoints[landmark] = detectionPoint;
+                return this;
+            }
+
             public Builder WithPersonId(int personId)
             {
                 realSenseSkeletonData.personId = personId;

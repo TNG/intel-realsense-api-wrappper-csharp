@@ -31,7 +31,7 @@
         public FacesData FacesData
         {
             get { return facesData; }
-        }
+        } 
 
         public SkeletonsDeterminerData SkeletonsDeterminerData
         {

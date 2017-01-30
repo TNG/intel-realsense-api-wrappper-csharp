@@ -27,11 +27,23 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
                 return this;
             }
 
+            public Builder WithImagePosition(Point2D imagePosition)
+            {
+                detectionPoint.imagePosition = imagePosition;
+                return this;
+            }
+
             public Builder WithWorldPosition(Point3D.Builder worldPosition)
             {
                 detectionPoint.worldPosition = worldPosition.Build();
                 return this;
             }
+
+            public Builder WithWorldPosition(Point3D worldPosition)
+            {
+                detectionPoint.worldPosition = worldPosition;
+                return this;
+            } 
 
             public DetectionPoint Build()
             {

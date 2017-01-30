@@ -108,7 +108,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
             return factory.Components.Creator.FacesLandmarksBuilder().Build();
         }
 
-        public HandsBuilder getHandsJointsBuilder()
+        public HandsBuilder GetHandsJointsBuilder()
         {
             return factory.Components.Creator.HandsJointsBuilder().Build();
         }

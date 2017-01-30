@@ -54,7 +54,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
             components = GetComponents(componentsBuilder);
             overallImageCreator = GetImageCreator(componentsBuilder);
             facesLandmarksBuilder = componentsBuilder.GetFacesBuilder();
-            handsJointsBuilder = componentsBuilder.getHandsJointsBuilder();
+            handsJointsBuilder = componentsBuilder.GetHandsJointsBuilder();
             skeletonsBuilder = componentsBuilder.GetSkeletonsBuilder();
         }
 

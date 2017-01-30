@@ -42,6 +42,6 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Data
         public DetectionPoint.Builder DetectionPoint()
         {
             return new DetectionPoint.Builder();
-        }
+        } 
     }
 }
