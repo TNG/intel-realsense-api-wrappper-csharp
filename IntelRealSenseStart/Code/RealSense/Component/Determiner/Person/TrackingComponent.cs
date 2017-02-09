@@ -49,7 +49,10 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
         private void StartTrackingOfId(int currentId, PXCMPersonTrackingData trackingData)
         {
-            if (trackedPersons.Contains(currentId)) return;
+            if (trackedPersons.Contains(currentId))
+            {
+                return;
+            }
             trackedPersons.Add(currentId);
             trackingData.StartTracking(currentId);
         }

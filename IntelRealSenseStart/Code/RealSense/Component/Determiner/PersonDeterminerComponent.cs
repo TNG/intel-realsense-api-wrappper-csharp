@@ -1,4 +1,5 @@
-﻿using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
+﻿using System.Linq.Expressions;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
 using IntelRealSenseStart.Code.RealSense.Factory;
@@ -40,7 +41,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 nativeSense.SenseManager.EnablePersonTracking();
                 personModule = nativeSense.SenseManager.QueryPersonTracking();
                 PXCMPersonTrackingConfiguration personTrackingConfiguration = personModule.QueryConfiguration();
-                skeletonComponent = SkeletonComponent.Create().WithConfiguration(personTrackingConfiguration).WithFactory(factory).Build();
+                skeletonComponent = SkeletonComponent.Create().WithConfiguration(personTrackingConfiguration).WithFactory(factory).Build();  // TODO: COMPONENTS IN BUILDER BAUEN -> SIEHE FACE COMPONENT (GESTURE AUCH)
                 trackingComponent = TrackingComponent.Create().WithPersonModule(personModule).WithConfiguration(personTrackingConfiguration).Build();
             }
         }

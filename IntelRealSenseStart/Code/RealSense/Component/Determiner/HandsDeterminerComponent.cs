@@ -54,7 +54,6 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         private void ConfigureHandOptions(PXCMHandConfiguration handConfiguration)
         {
-            // TODO no more hardcoding
             if (configuration.HandsDetection.SegmentationImageEnabled)
             {
                 handConfiguration.EnableSegmentationImage(true);

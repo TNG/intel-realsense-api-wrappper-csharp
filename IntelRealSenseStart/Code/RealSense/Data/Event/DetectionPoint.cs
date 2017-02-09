@@ -6,8 +6,6 @@ namespace IntelRealSenseStart.Code.RealSense.Data.Event
     [Serializable]
     public class DetectionPoint
     {
-        // TODO confidence levels
-
         public Point2D imagePosition;
 
         public Point3D worldPosition;
