@@ -6,15 +6,13 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 {
     public class TrackingComponent
     {
-        private readonly PXCMPersonTrackingModule personModule;
         private readonly PXCMPersonTrackingConfiguration personTrackingConfiguration;
-        private List<int> TrackedPersons; 
+        private readonly List<int> trackedPersons; 
 
-        private TrackingComponent(PXCMPersonTrackingModule personModule, PXCMPersonTrackingConfiguration personTrackingConfiguration)
+        private TrackingComponent(PXCMPersonTrackingConfiguration personTrackingConfiguration)
         {
-            this.personModule = personModule;
             this.personTrackingConfiguration = personTrackingConfiguration;
-            TrackedPersons = new List<int>();
+            trackedPersons = new List<int>();
         }
 
         public void Configure()
@@ -41,38 +39,37 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
         private void StartAndStopTracking(IEnumerable<int> currentIds, PXCMPersonTrackingData trackingData)
         {
-            foreach (int currentId in currentIds)
+            var idsToTrack = currentIds as IList<int> ?? currentIds.ToList();
+            foreach (var currentId in idsToTrack)
             {
                 StartTrackingOfId(currentId, trackingData);
             }
-            StopTrackingOfNotRecognizedIds(currentIds, trackingData);
+            StopTrackingOfNotRecognizedIds(idsToTrack, trackingData);
         } 
 
         private void StartTrackingOfId(int currentId, PXCMPersonTrackingData trackingData)
         {
-            if (!TrackedPersons.Contains(currentId))
-            {
-                TrackedPersons.Add(currentId);
-                trackingData.StartTracking(currentId);
-            }
+            if (trackedPersons.Contains(currentId)) return;
+            trackedPersons.Add(currentId);
+            trackingData.StartTracking(currentId);
         }
 
         private void StopTrackingOfNotRecognizedIds(IEnumerable<int> currentIds, PXCMPersonTrackingData trackingData)
         {
-            List<int> IdsToRemove = new List<int>();
-            foreach (var trackedPerson in TrackedPersons.Where(trackedPerson => !currentIds.Contains(trackedPerson)))
+            var idsToRemove = new List<int>();
+            foreach (var trackedPerson in trackedPersons.Where(trackedPerson => !currentIds.Contains(trackedPerson)))
             {   
-                IdsToRemove.Add(trackedPerson);
+                idsToRemove.Add(trackedPerson);
                 trackingData.StopTracking(trackedPerson);
             }
-            RemoveIds(IdsToRemove);
+            RemoveIds(idsToRemove);
         }
 
-        private void RemoveIds(List<int> idsToRemove)
+        private void RemoveIds(IEnumerable<int> idsToRemove)
         {
-            foreach (int id in idsToRemove)
+            foreach (var id in idsToRemove)
             {
-                TrackedPersons.Remove(id);
+                trackedPersons.Remove(id);
             }
         }
 
@@ -83,17 +80,15 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
         public class Builder
         {
-            private PXCMPersonTrackingModule personModule;
             private PXCMPersonTrackingConfiguration personTrackingConfiguration;
 
             public TrackingComponent Build()
             {
-                return new TrackingComponent(personModule, personTrackingConfiguration);
+                return new TrackingComponent(personTrackingConfiguration);
             }
 
             public Builder WithPersonModule(PXCMPersonTrackingModule personModule)
             {
-                this.personModule = personModule;
                 return this;
             }
 
