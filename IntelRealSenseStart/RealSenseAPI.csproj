@@ -159,6 +159,7 @@
     <Compile Include="Code\RealSense\Event\FeatureConfigurerListener.cs" />
     <Compile Include="Code\RealSense\Event\FrameEventListener.cs" />
     <Compile Include="Code\RealSense\Event\ManageRealSenseThrewException.cs" />
+    <Compile Include="Code\RealSense\Event\ManageRealSenseWorks.cs" />
     <Compile Include="Code\RealSense\Event\ReadyEventListener.cs" />
     <Compile Include="Code\RealSense\Event\SpeechOutputStatusEventArgs.cs" />
     <Compile Include="Code\RealSense\Event\SpeechOutputStatusListener.cs" />
