@@ -1,6 +1,7 @@
 ﻿using IntelRealSenseStart.Code.RealSense.Component.Determiner;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Builder;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Face;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
 
 namespace IntelRealSenseStart.Code.RealSense.Factory.Component
@@ -15,6 +16,11 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
         public HandsDeterminerComponent.Builder Hands()
         {
             return new HandsDeterminerComponent.Builder();
+        }
+
+        public GestureComponent.Builder Gesture()
+        {
+            return new GestureComponent.Builder();
         }
 
         public FaceDeterminerComponent.Builder Face()

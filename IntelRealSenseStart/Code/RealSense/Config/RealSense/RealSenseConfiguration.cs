@@ -16,6 +16,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
         {
             baseConfiguration = BaseConfiguration.DEFAULT_CONFIGURATION;
             imageConfiguration = ImageConfiguration.DEFAULT_CONFIGURATION;
+            handsConfiguration = HandsConfiguration.DEFAULT_CONFIGURATION;
         }
 
         public BaseConfiguration Base
@@ -47,7 +48,7 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
 
         public bool HandsDetectionEnabled
         {
-            get { return handsConfiguration != null; }
+            get { return handsConfiguration.SegmentationImageEnabled && handsConfiguration.GestureNames.Count > 0; }
         }
 
         public HandsConfiguration HandsDetection

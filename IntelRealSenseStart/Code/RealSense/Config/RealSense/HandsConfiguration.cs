@@ -5,8 +5,10 @@ namespace IntelRealSenseStart.Code.RealSense.Config.RealSense
 {
     public class HandsConfiguration
     {
+        public static readonly HandsConfiguration DEFAULT_CONFIGURATION = new HandsConfiguration();
+
         private bool segmentationImageEnabled;
-        private List<GestureTypes.GestureTypesEnum> gestureNames; 
+        private readonly List<GestureTypes.GestureTypesEnum> gestureNames; 
 
         private HandsConfiguration()
         {

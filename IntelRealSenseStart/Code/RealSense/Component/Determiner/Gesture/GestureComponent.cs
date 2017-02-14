@@ -67,10 +67,5 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture
                 return new GestureComponent(gestureName);
             }
         }
-
-        public static Builder Create()
-        {
-            return new Builder();
-        }
     }
 }

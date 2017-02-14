@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture;
-using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gestures;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
 using IntelRealSenseStart.Code.RealSense.Factory;
@@ -12,16 +11,16 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 {
     public class HandsDeterminerComponent : FrameDeterminerComponent
     {
-        private List<GestureComponent> gestureComponents; 
+        private readonly List<GestureComponent> gestureComponents;
         private readonly RealSenseConfiguration configuration;
         private readonly RealSenseFactory factory;
         private readonly NativeSense nativeSense;
 
         private PXCMHandData handData;
 
-        private HandsDeterminerComponent(RealSenseFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration)
-        {   
-            gestureComponents = new List<GestureComponent>();
+        private HandsDeterminerComponent(RealSenseFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration, List<GestureComponent> gestureComponents)
+        {
+            this.gestureComponents = gestureComponents;
             this.factory = factory;
             this.nativeSense = nativeSense;
             this.configuration = configuration;
@@ -58,20 +57,8 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
             {
                 handConfiguration.EnableSegmentationImage(true);
             }
-            if (configuration.HandsDetection.GestureNames.Count <= 0) return;
-            gestureComponents = CreateGestureComponents();
             ConfigureComponents(handConfiguration);
         } 
-
-        private List<GestureComponent> CreateGestureComponents()
-        {   
-            List<GestureComponent> gestureComponentsList = new List<GestureComponent>();
-            foreach (GestureTypes.GestureTypesEnum gestureName in configuration.HandsDetection.GestureNames)
-            {  
-                gestureComponentsList.Add(GestureComponent.Create().WithGestureName(gestureName).Build());
-            }
-            return gestureComponentsList;
-        }
 
         private void ConfigureComponents(PXCMHandConfiguration handConfiguration)
         {
@@ -161,6 +148,12 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
             private RealSenseFactory factory;
             private NativeSense nativeSense;
             private RealSenseConfiguration configuration;
+            private readonly List<GestureComponent> gestureComponents;
+
+            public Builder()
+            {
+                gestureComponents = new List<GestureComponent>();
+            }
 
             public Builder WithFactory(RealSenseFactory factory)
             {
@@ -180,6 +173,18 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 return this;
             }
 
+            public Builder WithGestureComponent(GestureComponent gestureComponent)
+            {
+                gestureComponents.Add(gestureComponent);
+                return this;
+            }
+
+            public Builder WithGestureComponents(List<GestureComponent> gestureComponents)
+            {
+                this.gestureComponents.AddRange(gestureComponents); 
+                return this;
+            }
+
             public HandsDeterminerComponent Build()
             {
                 factory.Check(Preconditions.IsNotNull,
@@ -189,7 +194,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 configuration.Check(Preconditions.IsNotNull,
                     "The RealSense configuration must be set in order to create the hands determiner component");
 
-                return new HandsDeterminerComponent(factory, nativeSense, configuration);
+                return new HandsDeterminerComponent(factory, nativeSense, configuration, gestureComponents);
             }
         }
     }

@@ -1,6 +1,9 @@
-﻿using IntelRealSenseStart.Code.RealSense.Component.Creator;
+﻿using System.Collections.Generic;
+using System.Linq;
+using IntelRealSenseStart.Code.RealSense.Component.Creator;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Face;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
 using IntelRealSenseStart.Code.RealSense.Component.Output;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
@@ -33,7 +36,20 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
                 .WithFactory(factory)
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
+                .WithGestureComponents(CreateGestureComponents())
                 .Build();
+        }
+
+        private List<GestureComponent> CreateGestureComponents()
+        {
+            return
+                configuration.HandsDetection.GestureNames.Select(
+                    gestureName => CreateGestureComponent().WithGestureName(gestureName).Build()).ToList();
+        }
+
+        private GestureComponent.Builder CreateGestureComponent()
+        {
+            return factory.Components.Determiner.Gesture();
         }
 
         public FaceDeterminerComponent CreateFaceDeterminerComponent()
