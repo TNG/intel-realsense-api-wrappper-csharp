@@ -6,19 +6,19 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 {
     public class TrackingComponent
     {
-        private readonly PXCMPersonTrackingConfiguration personTrackingConfiguration;
+        public PXCMPersonTrackingConfiguration PersonTrackingConfiguration { get; set; }
         private readonly List<int> trackedPersons; 
 
-        private TrackingComponent(PXCMPersonTrackingConfiguration personTrackingConfiguration)
+        private TrackingComponent()
         {
-            this.personTrackingConfiguration = personTrackingConfiguration;
             trackedPersons = new List<int>();
         }
 
         public void Configure()
         {
+            PersonTrackingConfiguration.Check(Preconditions.IsNotNull, "The person tracking configuration has to be set");
             PXCMPersonTrackingConfiguration.TrackingConfiguration trackingConfiguration =
-                personTrackingConfiguration.QueryTracking();
+                PersonTrackingConfiguration.QueryTracking();
             trackingConfiguration.Enable();
         }
 
@@ -76,29 +76,11 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
             }
         }
 
-        public static Builder Create()
-        {
-            return new Builder();
-        }
-
         public class Builder
         {
-            private PXCMPersonTrackingConfiguration personTrackingConfiguration;
-
             public TrackingComponent Build()
             {
-                return new TrackingComponent(personTrackingConfiguration);
-            }
-
-            public Builder WithPersonModule(PXCMPersonTrackingModule personModule)
-            {
-                return this;
-            }
-
-            public Builder WithConfiguration(PXCMPersonTrackingConfiguration personTrackingConfiguration)
-            {
-                this.personTrackingConfiguration = personTrackingConfiguration;
-                return this;
+                return new TrackingComponent();
             }
         }
     }

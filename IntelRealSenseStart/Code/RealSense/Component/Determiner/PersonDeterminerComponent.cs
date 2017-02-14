@@ -1,8 +1,6 @@
-﻿using System.Linq.Expressions;
-using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
+﻿using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
-using IntelRealSenseStart.Code.RealSense.Factory;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using IntelRealSenseStart.Code.RealSense.Provider;
 
@@ -10,23 +8,21 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 {
     public class PersonDeterminerComponent : FrameDeterminerComponent
     {
-        private SkeletonComponent skeletonComponent;
-        private TrackingComponent trackingComponent;
+        private readonly SkeletonComponent skeletonComponent;
+        private readonly TrackingComponent trackingComponent;
 
         private readonly RealSenseConfiguration configuration;
-        private readonly RealSenseFactory factory;
         private readonly NativeSense nativeSense;
 
-        public PXCMPersonTrackingData trackingData;
+        private PXCMPersonTrackingData trackingData;
         private PXCMPersonTrackingModule personModule;
 
-        private PersonDeterminerComponent(RealSenseConfiguration configuration, RealSenseFactory factory, NativeSense nativeSense)
+        private PersonDeterminerComponent(RealSenseConfiguration configuration, NativeSense nativeSense, SkeletonComponent skeletonComponent, TrackingComponent trackingComponent)
         {
-            this.factory = factory;
             this.configuration = configuration;
             this.nativeSense = nativeSense;
-            skeletonComponent = SkeletonComponent.Create().Build();
-            trackingComponent = TrackingComponent.Create().Build();
+            this.skeletonComponent = skeletonComponent;
+            this.trackingComponent = trackingComponent;
         }
 
         public bool ShouldBeStarted
@@ -41,8 +37,8 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 nativeSense.SenseManager.EnablePersonTracking();
                 personModule = nativeSense.SenseManager.QueryPersonTracking();
                 PXCMPersonTrackingConfiguration personTrackingConfiguration = personModule.QueryConfiguration();
-                skeletonComponent = SkeletonComponent.Create().WithConfiguration(personTrackingConfiguration).WithFactory(factory).Build();  // TODO: COMPONENTS IN BUILDER BAUEN -> SIEHE FACE COMPONENT (GESTURE AUCH)
-                trackingComponent = TrackingComponent.Create().WithPersonModule(personModule).WithConfiguration(personTrackingConfiguration).Build();
+                skeletonComponent.PersonTrackingConfiguration = personTrackingConfiguration;
+                trackingComponent.PersonTrackingConfiguration = personTrackingConfiguration;
             }
         }
 
@@ -66,15 +62,10 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         public class Builder
         {
-            private RealSenseFactory factory;
             private NativeSense nativeSense;
             private RealSenseConfiguration configuration;
-
-            public Builder WithFactory(RealSenseFactory factory)
-            {
-                this.factory = factory;
-                return this;
-            }
+            private SkeletonComponent skeletonComponent;
+            private TrackingComponent trackingComponent;
 
             public Builder WithNativeSense(NativeSense nativeSense)
             {
@@ -88,16 +79,28 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 return this;
             }
 
+            public Builder WithSkeletonComponent(SkeletonComponent skeletonComponent)
+            {
+                this.skeletonComponent = skeletonComponent;
+                return this;
+            }
+
+            public Builder WithTrackingComponent(TrackingComponent trackingComponent)
+            {
+                this.trackingComponent = trackingComponent;
+                return this;
+            }
+
             public PersonDeterminerComponent Build()
             {
-                factory.Check(Preconditions.IsNotNull,
-                    "The factory must be set in order to create the face determiner component");
                 nativeSense.Check(Preconditions.IsNotNull,
-                    "The RealSense manager must be set in order to create the face determiner component");
+                    "The RealSense manager must be set in order to create the person determiner component");
                 configuration.Check(Preconditions.IsNotNull,
-                    "The RealSense configuration must be set in order to create the face determiner component");
+                    "The RealSense configuration must be set in order to create the person determiner component");
+                skeletonComponent.Check(Preconditions.IsNotNull, "The skeleton component must be set in order to create the person determiner component");
+                trackingComponent.Check(Preconditions.IsNotNull, "The tracking component must be set in order to create the person determiner component");
 
-                return new PersonDeterminerComponent(configuration, factory, nativeSense);
+                return new PersonDeterminerComponent(configuration, nativeSense, skeletonComponent, trackingComponent);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using IntelRealSenseStart.Code.RealSense.Component.Determiner;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Builder;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Face;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
 
 namespace IntelRealSenseStart.Code.RealSense.Factory.Component
 {
@@ -24,6 +25,16 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
         public PersonDeterminerComponent.Builder Skeletons()
         {
             return new PersonDeterminerComponent.Builder();
+        }
+
+        public SkeletonComponent.Builder SkeletonComponent()
+        {
+            return new SkeletonComponent.Builder();
+        }
+
+        public TrackingComponent.Builder TrackingComponent()
+        {
+            return new TrackingComponent.Builder();
         }
 
         public FaceLandmarksDeterminerComponent.Builder FaceLandmarks()

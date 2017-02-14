@@ -8,19 +8,19 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 {
     public class SkeletonComponent
     {
-        private readonly PXCMPersonTrackingConfiguration personTrackingConfiguration;
+        public PXCMPersonTrackingConfiguration PersonTrackingConfiguration { get; set; }
         private readonly RealSenseFactory factory;
 
-        private SkeletonComponent(PXCMPersonTrackingConfiguration personTrackingConfiguration, RealSenseFactory factory)
+        private SkeletonComponent(RealSenseFactory factory)
         {
-            this.personTrackingConfiguration = personTrackingConfiguration;
             this.factory = factory;
         }
 
         public void Configure(int maxTrackedPersons, PXCMPersonTrackingConfiguration.SkeletonJointsConfiguration.SkeletonMode skeletonMode)
         {
+            PersonTrackingConfiguration.Check(Preconditions.IsNotNull, "The person tracking Configuration has to be set");
             PXCMPersonTrackingConfiguration.SkeletonJointsConfiguration skeletonJointsConfiguration =
-                personTrackingConfiguration.QuerySkeletonJoints();
+                PersonTrackingConfiguration.QuerySkeletonJoints();
             skeletonJointsConfiguration.Enable();
             skeletonJointsConfiguration.SetMaxTrackedPersons(maxTrackedPersons);
             skeletonJointsConfiguration.SetTrackingArea(skeletonMode);
@@ -68,25 +68,13 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
             return personId;
         }
 
-        public static Builder Create()
-        {
-            return new Builder();
-        }
-
         public class Builder
         {
-            private PXCMPersonTrackingConfiguration personTrackingConfiguration;
             private RealSenseFactory factory;
 
             public SkeletonComponent Build()
             {
-                return new SkeletonComponent(personTrackingConfiguration, factory);
-            }
-
-            public Builder WithConfiguration(PXCMPersonTrackingConfiguration personTrackingConfiguration)
-            {
-                this.personTrackingConfiguration = personTrackingConfiguration;
-                return this;
+                return new SkeletonComponent(factory);
             }
 
             public Builder WithFactory(RealSenseFactory factory)

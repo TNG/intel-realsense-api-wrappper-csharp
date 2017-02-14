@@ -1,6 +1,7 @@
 ﻿using IntelRealSenseStart.Code.RealSense.Component.Creator;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Face;
+using IntelRealSenseStart.Code.RealSense.Component.Determiner.Person;
 using IntelRealSenseStart.Code.RealSense.Component.Output;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Factory;
@@ -50,10 +51,21 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         public PersonDeterminerComponent CreateSkeletonDeterminerComponent()
         {
             return factory.Components.Determiner.Skeletons()
-                .WithFactory(factory)
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
+                .WithSkeletonComponent(CreateSkeletonComponent().WithFactory(factory).Build())
+                .WithTrackingComponent(CreateTrackingComponent().Build())
                 .Build();
+        }
+
+        private SkeletonComponent.Builder CreateSkeletonComponent()
+        {
+            return factory.Components.Determiner.SkeletonComponent();
+        }
+
+        private TrackingComponent.Builder CreateTrackingComponent()
+        {
+            return factory.Components.Determiner.TrackingComponent();
         }
 
         private FaceLandmarksDeterminerComponent.Builder CreateFaceLandmarksDeterminerComponent()
