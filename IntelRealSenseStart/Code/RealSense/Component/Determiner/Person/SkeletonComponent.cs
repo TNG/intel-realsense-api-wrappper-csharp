@@ -79,7 +79,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
             public Builder WithFactory(DeterminerDataFactory factory)
             {
-                this.factory = factory; // TODO: Nur data factory
+                this.factory = factory;
                 return this;
             }
         }
