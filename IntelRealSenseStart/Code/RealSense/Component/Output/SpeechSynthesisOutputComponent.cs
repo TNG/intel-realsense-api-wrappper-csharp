@@ -22,7 +22,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Output
         private const int TIME_BETWEEN_SENTENCES = 300;
         private const int WAIT_TIMEOUT = 25;
 
-        private readonly RealSenseFactory factory;
+        private readonly EventsFactory factory;
         private readonly NativeSense nativeSense;
         private readonly RealSensePropertiesManager propertiesManager;
         private readonly RealSenseConfiguration configuration;
@@ -35,7 +35,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Output
 
         private volatile bool stopped;
 
-        private SpeechSynthesisOutputComponent(RealSenseFactory factory, NativeSense nativeSense, 
+        private SpeechSynthesisOutputComponent(EventsFactory factory, NativeSense nativeSense, 
             RealSensePropertiesManager propertiesManager, RealSenseConfiguration configuration)
         {
             this.factory = factory;
@@ -72,7 +72,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Output
             catch (InvalidOperationException)
             {
                 throw new RealSenseInitializationException(
-                    String.Format("No profile for the specified selector could be found"));
+                    "No profile for the specified selector could be found");
             }
         }
 
@@ -172,7 +172,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Output
         {
             if (Speech != null)
             {
-                var eventArgs = factory.Events.SpeechOutputEvent()
+                var eventArgs = factory.SpeechOutputEvent()
                     .WithStatus(status)
                     .Build();
                 Speech.Invoke(eventArgs);
@@ -203,12 +203,12 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Output
 
         public class Builder
         {
-            private RealSenseFactory factory;
+            private EventsFactory factory;
             private NativeSense nativeSense;
             private RealSensePropertiesManager propertiesManager;
             private RealSenseConfiguration configuration;
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(EventsFactory factory)
             {
                 this.factory = factory;
                 return this;

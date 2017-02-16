@@ -3,7 +3,7 @@ using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Face;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using IntelRealSenseStart.Code.RealSense.Provider;
 
@@ -14,13 +14,13 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
         private readonly IEnumerable<FaceComponent> faceComponents;
 
         private readonly RealSenseConfiguration configuration;
-        private readonly RealSenseFactory factory;
+        private readonly DeterminerDataFactory factory;
         private readonly NativeSense nativeSense;
 
         private PXCMFaceData faceData;
         
         private FaceDeterminerComponent(IEnumerable<FaceComponent> faceComponents,
-            RealSenseFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration)
+            DeterminerDataFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration)
         {
             this.faceComponents = faceComponents;
             this.factory = factory;
@@ -75,7 +75,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
         private FacesData.Builder GetFacesData()
         {
             int index = 0;
-            return factory.Data.Determiner.Faces().WithFaces(
+            return factory.Faces().WithFaces(
                 GetIndividualFaces().Select(face => GetIndividualFaceData(index++, face)));
         }
 
@@ -88,7 +88,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         private FaceDeterminerData.Builder GetIndividualFaceData(int index, PXCMFaceData.Face face)
         {
-            var faceDeterminerData = factory.Data.Determiner.Face();
+            var faceDeterminerData = factory.Face();
             ProcessComponents(index, face, faceDeterminerData);
             return faceDeterminerData;
         }
@@ -122,7 +122,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
         {
             private readonly List<FaceComponent> faceComponents;
 
-            private RealSenseFactory factory;
+            private DeterminerDataFactory factory;
             private NativeSense nativeSense;
             private RealSenseConfiguration configuration;
 
@@ -131,7 +131,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 faceComponents = new List<FaceComponent>();
             }
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(DeterminerDataFactory factory)
             {
                 this.factory = factory;
                 return this;

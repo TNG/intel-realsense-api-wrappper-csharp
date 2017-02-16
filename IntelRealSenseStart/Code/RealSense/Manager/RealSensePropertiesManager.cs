@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using IntelRealSenseStart.Code.RealSense.Component.Property;
 using IntelRealSenseStart.Code.RealSense.Data.Properties;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using IntelRealSenseStart.Code.RealSense.Manager.Builder;
 
@@ -11,9 +11,9 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
     {
         private readonly List<PropertiesComponent<RealSenseProperties.Builder>> components;
 
-        private readonly RealSenseFactory factory;
+        private readonly PropertiesDataFactory factory;
 
-        private RealSensePropertiesManager(RealSenseFactory factory, RealSensePropertyComponentsBuilder componentsBuilder)
+        private RealSensePropertiesManager(PropertiesDataFactory factory, RealSensePropertyComponentsBuilder componentsBuilder)
         {
             this.factory = factory;
 
@@ -33,17 +33,17 @@ namespace IntelRealSenseStart.Code.RealSense.Manager
 
         public RealSenseProperties GetProperties()
         {
-            RealSenseProperties.Builder properties = factory.Data.Properties.RealSense();
+            RealSenseProperties.Builder properties = factory.RealSense();
             components.Do(component => component.UpdateProperties(properties));
             return properties.Build();
         }
 
         public class Builder
         {
-            private RealSenseFactory factory;
+            private PropertiesDataFactory factory;
             private RealSensePropertyComponentsBuilder componentsBuilder;
            
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(PropertiesDataFactory factory)
             {
                 this.factory = factory;
                 return this;

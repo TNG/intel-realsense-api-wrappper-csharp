@@ -2,30 +2,30 @@
 using IntelRealSenseStart.Code.RealSense.Data.Common;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
 using IntelRealSenseStart.Code.RealSense.Data.Event;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 
 namespace IntelRealSenseStart.Code.RealSense.Component.Creator
 {
     public class SkeletonsBuilder
     {
-        private readonly RealSenseFactory factory;
+        private readonly DataFactory factory;
 
-        public SkeletonsBuilder(RealSenseFactory factory)
+        public SkeletonsBuilder(DataFactory factory)
         {
             this.factory = factory;
         }
 
         public RealSenseSkeletonsData GetSkeletonsData(List<SkeletonDeterminerData> skeletonsDeterminerData)
         {
-            RealSenseSkeletonsData.Builder skeletonsData = factory.Data.Events.Skeletons();
+            RealSenseSkeletonsData.Builder skeletonsData = factory.Events.Skeletons();
             skeletonsDeterminerData?.Do(skeletonDeterminerData => skeletonsData.WithSkeletonData(GetSkeletonData(skeletonDeterminerData)));
             return skeletonsData.Build();
         }
 
         private RealSenseSkeletonData.Builder GetSkeletonData(SkeletonDeterminerData skeletonDeterminerData)
         {
-            RealSenseSkeletonData.Builder skeletonData = factory.Data.Events.Skeleton();
+            RealSenseSkeletonData.Builder skeletonData = factory.Events.Skeleton();
             if (skeletonDeterminerData.SkeletonPoints != null)
             {
                 0.To(skeletonDeterminerData.SkeletonPoints.Length - 1).ToArray().Do(index =>
@@ -43,26 +43,26 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
 
         private DetectionPoint.Builder GetDetectionPoint(PXCMPersonTrackingData.PersonJoints.SkeletonPoint skeletonPoint)
         {
-            return factory.Data.Events.DetectionPoint()
+            return factory.Events.DetectionPoint()
                 .WithImagePosition(GetPoint2DFrom(skeletonPoint.image, skeletonPoint.confidenceImage))
                 .WithWorldPosition(GetPoint3DFrom(skeletonPoint.world, skeletonPoint.confidenceWorld));
         }
 
         private Point2D.Builder GetPoint2DFrom(PXCMPointF32 point, int confidence)
         {
-            return factory.Data.Common.Point2D().From(point).WithConfidence(confidence);
+            return factory.Common.Point2D().From(point).WithConfidence(confidence);
         }
 
         private Point3D.Builder GetPoint3DFrom(PXCMPoint3DF32 point, int confidence)
         {
-            return factory.Data.Common.Point3D().From(point).WithConfidence(confidence);
+            return factory.Common.Point3D().From(point).WithConfidence(confidence);
         }
 
         public class Builder
         {
             private readonly SkeletonsBuilder skeletonsBuilder;
 
-            public Builder(RealSenseFactory factory)
+            public Builder(DataFactory factory)
             {
                 skeletonsBuilder = new SkeletonsBuilder(factory);
             }

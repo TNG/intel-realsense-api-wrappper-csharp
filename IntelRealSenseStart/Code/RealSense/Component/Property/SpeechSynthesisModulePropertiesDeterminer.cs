@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Data.Properties;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using IntelRealSenseStart.Code.RealSense.Native;
 using IntelRealSenseStart.Code.RealSense.Provider;
@@ -10,10 +10,10 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
 {
     public class SpeechSynthesisModulePropertiesDeterminer : PropertiesComponent<AudioProperties.Builder>
     {
-        private readonly RealSenseFactory factory;
+        private readonly PropertiesDataFactory factory;
         private readonly PXCMSession session;
 
-        private SpeechSynthesisModulePropertiesDeterminer(RealSenseFactory factory, NativeSense nativeSense)
+        private SpeechSynthesisModulePropertiesDeterminer(PropertiesDataFactory factory, NativeSense nativeSense)
         {
             this.factory = factory;
             session = nativeSense.Session;
@@ -28,7 +28,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
 
         private SpeechSynthesisModuleProperties.Builder GetAudioModule(PXCMSession.ImplDesc module)
         {
-            return factory.Data.Properties.SpeechSynthesisModule()
+            return factory.SpeechSynthesisModule()
                 .WithModuleName(module.friendlyName)
                 .WithDeviceInfo(module)
                 .WithProfiles(GetProfiles(module));
@@ -52,7 +52,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
                     break;
                 }
 
-                profiles.Add(factory.Data.Properties.SpeechSynthesisProfile()
+                profiles.Add(factory.SpeechSynthesisProfile()
                     .WithProfile(profile)
                     .WithLanguage(profile.language));
             }
@@ -63,10 +63,10 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
 
         public class Builder
         {
-            private RealSenseFactory factory;
+            private PropertiesDataFactory factory;
             private NativeSense nativeSense;
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(PropertiesDataFactory factory)
             {
                 this.factory = factory;
                 return this;

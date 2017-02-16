@@ -38,12 +38,12 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
 
         public FacesBuilder.Builder FacesLandmarksBuilder()
         {
-            return new FacesBuilder.Builder(realSenseFactory);
+            return new FacesBuilder.Builder(realSenseFactory.Data);
         }
 
         public HandsBuilder.Builder HandsJointsBuilder()
         {
-            return new HandsBuilder.Builder(realSenseFactory);
+            return new HandsBuilder.Builder(realSenseFactory.Data);
         }
 
         public UserIdsImageCreator.Builder UserIdsImageCreator()
@@ -53,7 +53,7 @@ namespace IntelRealSenseStart.Code.RealSense.Factory.Component
 
         public SkeletonsBuilder.Builder SkeletonsBuilder()
         {
-            return new SkeletonsBuilder.Builder(realSenseFactory);
+            return new SkeletonsBuilder.Builder(realSenseFactory.Data);
         } 
     }
 }

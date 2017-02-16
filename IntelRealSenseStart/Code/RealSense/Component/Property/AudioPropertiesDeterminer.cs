@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using IntelRealSenseStart.Code.RealSense.Data.Properties;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 
 namespace IntelRealSenseStart.Code.RealSense.Component.Property
 {
     public class AudioPropertiesDeterminer : PropertiesComponent<RealSenseProperties.Builder>
     {
-        private RealSenseFactory factory;
+        private PropertiesDataFactory factory;
         private readonly List<PropertiesComponent<AudioProperties.Builder>> videoPropertiesComponents;
 
         private AudioPropertiesDeterminer()
@@ -17,7 +17,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
 
         public void UpdateProperties(RealSenseProperties.Builder realSenseProperties)
         {
-            var audioProperties = factory.Data.Properties.Audio();
+            var audioProperties = factory.Audio();
             videoPropertiesComponents.Do(audioPropertiesComponent => audioPropertiesComponent.UpdateProperties(audioProperties));
             realSenseProperties.WithAudioProperties(audioProperties);
         }
@@ -31,7 +31,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Property
                 audioPropertiesDeterminer = new AudioPropertiesDeterminer();
             }
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(PropertiesDataFactory factory)
             {
                 audioPropertiesDeterminer.factory = factory;
                 return this;

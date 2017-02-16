@@ -3,7 +3,7 @@ using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture;
 using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using IntelRealSenseStart.Code.RealSense.Provider;
 
@@ -13,12 +13,12 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
     {
         private readonly List<GestureComponent> gestureComponents;
         private readonly RealSenseConfiguration configuration;
-        private readonly RealSenseFactory factory;
+        private readonly DeterminerDataFactory factory;
         private readonly NativeSense nativeSense;
 
         private PXCMHandData handData;
 
-        private HandsDeterminerComponent(RealSenseFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration, List<GestureComponent> gestureComponents)
+        private HandsDeterminerComponent(DeterminerDataFactory factory, NativeSense nativeSense, RealSenseConfiguration configuration, List<GestureComponent> gestureComponents)
         {
             this.gestureComponents = gestureComponents;
             this.factory = factory;
@@ -84,7 +84,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         private HandsDeterminerData.Builder GetHandsData()
         {   
-            var handsDeterminerData = factory.Data.Determiner.Hands();
+            var handsDeterminerData = factory.Hands();
             handsDeterminerData.WithHands(GetIndividualHandSamples().Select(GetIndividualHandData));
             ProcessComponents(handsDeterminerData);
             return handsDeterminerData;
@@ -107,7 +107,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         private HandDeterminerData.Builder GetIndividualHandData(PXCMHandData.IHand individualHandSample)
         {
-            return factory.Data.Determiner.Hand()
+            return factory.Hand()
                 .WithBodySide(GetUserId(individualHandSample))
                 .WithJoints(GetJointData(individualHandSample))
                 .WithSegmentationImage(GetSegmentationImage(individualHandSample));
@@ -145,7 +145,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         public class Builder
         {
-            private RealSenseFactory factory;
+            private DeterminerDataFactory factory;
             private NativeSense nativeSense;
             private RealSenseConfiguration configuration;
             private readonly List<GestureComponent> gestureComponents;
@@ -155,7 +155,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
                 gestureComponents = new List<GestureComponent>();
             }
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(DeterminerDataFactory factory)
             {
                 this.factory = factory;
                 return this;

@@ -2,7 +2,7 @@
 using IntelRealSenseStart.Code.RealSense.Data.Common;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
 using IntelRealSenseStart.Code.RealSense.Data.Event;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using HandData = IntelRealSenseStart.Code.RealSense.Data.Event.HandData;
 using HandsData = IntelRealSenseStart.Code.RealSense.Data.Event.HandsData;
@@ -11,16 +11,16 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
 {
     public class HandsBuilder
     {
-        private readonly RealSenseFactory factory;
+        private readonly DataFactory factory;
 
-        public HandsBuilder(RealSenseFactory factory)
+        public HandsBuilder(DataFactory factory)
         {
             this.factory = factory;
         }
 
         public HandsData GetHandsData(List<HandDeterminerData> handsData, List<GestureDeterminerData> gesturesData)
         {
-            var handsJoints = factory.Data.Events.Hands();
+            var handsJoints = factory.Events.Hands();
             handsData?.Do(handData => handsJoints.WithFaceLandmarks(GetHandJoints(handData)));
             gesturesData?.Do(gestureData => handsJoints.WithGestureData(GetGestureData(gestureData)));
             return handsJoints.Build();
@@ -28,14 +28,14 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
 
         private GestureData.Builder GetGestureData(GestureDeterminerData gestureData)
         {
-            var gesture = factory.Data.Events.Gesture();
+            var gesture = factory.Events.Gesture();
             gesture.WithGestureData(gestureData.Gesture);
             return gesture;
         }
 
         private HandData.Builder GetHandJoints(HandDeterminerData handDeterminerData)
         {
-            var handJoints = factory.Data.Events.Hand();
+            var handJoints = factory.Events.Hand();
             0.To(handDeterminerData.Joints.Count - 1).ToArray().Do(index =>
                 handJoints.WithDetectionPoint(
                     GetJointName(index),
@@ -50,26 +50,26 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Creator
 
         private DetectionPoint.Builder GetDetectionPoint(PXCMHandData.JointData jointData)
         {
-            return factory.Data.Events.DetectionPoint()
+            return factory.Events.DetectionPoint()
                 .WithImagePosition(GetPoint2DFrom(jointData.positionImage, jointData.confidence))
                 .WithWorldPosition(GetPoint3DFrom(jointData.positionWorld, jointData.confidence));
         }
 
         private Point2D.Builder GetPoint2DFrom(PXCMPoint3DF32 point, int confidence)
         {
-            return factory.Data.Common.Point2D().From(point).WithConfidence(confidence);
+            return factory.Common.Point2D().From(point).WithConfidence(confidence);
         }
 
         private Point3D.Builder GetPoint3DFrom(PXCMPoint3DF32 point, int confidence)
         {
-            return factory.Data.Common.Point3D().From(point).WithConfidence(confidence);
+            return factory.Common.Point3D().From(point).WithConfidence(confidence);
         }
 
         public class Builder
         {
             private readonly HandsBuilder handsJointsBuilder;
 
-            public Builder(RealSenseFactory factory)
+            public Builder(DataFactory factory)
             {
                 handsJointsBuilder = new HandsBuilder(factory);
             }

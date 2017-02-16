@@ -2,7 +2,7 @@
 using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Component.Determiner.Gestures;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 
 namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture
@@ -31,12 +31,12 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture
             handConfiguration.EnableGesture(gestureName);
         }
 
-        public void Process(PXCMHandData handData, HandsDeterminerData.Builder handsDeterminerData, RealSenseFactory factory)
+        public void Process(PXCMHandData handData, HandsDeterminerData.Builder handsDeterminerData, DeterminerDataFactory factory)
         {
             handsDeterminerData.WithGestures(GetIndividualGestureSamples(handData, factory));
         }
 
-        private IEnumerable<GestureDeterminerData> GetIndividualGestureSamples(PXCMHandData handData, RealSenseFactory factory)
+        private IEnumerable<GestureDeterminerData> GetIndividualGestureSamples(PXCMHandData handData, DeterminerDataFactory factory)
         {
             return 0.To(handData.QueryFiredGesturesNumber()).ToArray().Select(index =>
             {
@@ -44,7 +44,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Gesture
                 handData.QueryFiredGestureData(index, out gestureData);
                 if (gestureData != null && gestureData.name == gestureName)
                 {
-                    GestureDeterminerData.Builder gestureDeterminerData = factory.Data.Determiner.Gesture();
+                    GestureDeterminerData.Builder gestureDeterminerData = factory.Gesture();
                     gestureDeterminerData.WithGesture(gestureData);
                     return gestureDeterminerData.Build();
                 }

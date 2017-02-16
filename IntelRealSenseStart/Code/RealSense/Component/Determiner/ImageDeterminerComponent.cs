@@ -1,6 +1,6 @@
 ﻿using IntelRealSenseStart.Code.RealSense.Config.RealSense;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 using IntelRealSenseStart.Code.RealSense.Provider;
 
@@ -10,12 +10,12 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
     {
         private readonly RealSenseConfiguration configuration;
 
-        private readonly RealSenseFactory factory;
+        private readonly DeterminerDataFactory factory;
         private readonly NativeSense nativeSense;
 
         private PXCMCapture.Device device;
 
-        private ImageDeterminerComponent(RealSenseFactory factory, NativeSense nativeSense,
+        private ImageDeterminerComponent(DeterminerDataFactory factory, NativeSense nativeSense,
             RealSenseConfiguration configuration)
         {
             this.factory = factory;
@@ -61,7 +61,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
             PXCMCapture.Sample realSenseSample = nativeSense.SenseManager.QuerySample();
 
             determinerData.WithImageData(
-                factory.Data.Determiner.Image()
+                factory.Image()
                     .WithColorImage(realSenseSample.color)
                     .WithDepthImage(realSenseSample.depth)
                     .WithUvMap(CreateUvMapFrom(realSenseSample)));
@@ -84,11 +84,11 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner
 
         public class Builder
         {
-            private RealSenseFactory factory;
+            private DeterminerDataFactory factory;
             private NativeSense nativeSense;
             private RealSenseConfiguration configuration;
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(DeterminerDataFactory factory)
             {
                 this.factory = factory;
                 return this;

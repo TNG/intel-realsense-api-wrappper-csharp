@@ -33,7 +33,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         public HandsDeterminerComponent CreateHandsDeterminerComponent()
         {   
             return factory.Components.Determiner.Hands()
-                .WithFactory(factory)
+                .WithFactory(factory.Data.Determiner)
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
                 .WithGestureComponents(CreateGestureComponents())
@@ -58,7 +58,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
                 .WithFaceComponent(CreateFaceLandmarksDeterminerComponent().Build())
                 .WithFaceComponent(CreateFaceRecognitionDeterminerComponent().Build())
                 .WithFaceComponent(CreatePulseDeterminerComponent().Build())
-                .WithFactory(factory)
+                .WithFactory(factory.Data.Determiner)
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
                 .Build();
@@ -69,7 +69,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
             return factory.Components.Determiner.Skeletons()
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
-                .WithSkeletonComponent(CreateSkeletonComponent().WithFactory(factory).Build())
+                .WithSkeletonComponent(CreateSkeletonComponent().WithFactory(factory.Data.Determiner).Build())
                 .WithTrackingComponent(CreateTrackingComponent().Build())
                 .Build();
         }
@@ -105,7 +105,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         public ImageDeterminerComponent CreatePictureDeterminerComponent()
         {
             return factory.Components.Determiner.Image()
-                .WithFactory(factory)
+                .WithFactory(factory.Data.Determiner)
                 .WithNativeSense(nativeSense)
                 .WithConfiguration(configuration)
                 .Build();
@@ -124,7 +124,7 @@ namespace IntelRealSenseStart.Code.RealSense.Manager.Builder
         public SpeechSynthesisOutputComponent CreateSpeechSynthesisOutputComponent()
         {
             return factory.Components.Output.SpeechSynthesis()
-                .WithFactory(factory)
+                .WithFactory(factory.Events)
                 .WithNativeSense(nativeSense)
                 .WithPropertiesManager(propertiesManager)
                 .WithConfiguration(configuration)

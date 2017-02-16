@@ -105,7 +105,7 @@ namespace IntelRealSenseStart.Code.RealSense
         {
             if (SpeechRecognized != null)
             {
-                SpeechOutput.Invoke(eventArgs);
+                SpeechOutput?.Invoke(eventArgs);
             }
         }
 
@@ -151,7 +151,7 @@ namespace IntelRealSenseStart.Code.RealSense
                     .Build();
 
                 return factory.Manager.PropertiesManager()
-                    .WithFactory(factory)
+                    .WithFactory(factory.Data.Properties)
                     .WithComponentsBuilder(componentsBuilder)
                     .Build();
             }

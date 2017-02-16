@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using IntelRealSenseStart.Code.RealSense.Data.Determiner;
-using IntelRealSenseStart.Code.RealSense.Factory;
+using IntelRealSenseStart.Code.RealSense.Factory.Data;
 using IntelRealSenseStart.Code.RealSense.Helper;
 
 namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
@@ -9,9 +9,9 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
     public class SkeletonComponent
     {
         public PXCMPersonTrackingConfiguration PersonTrackingConfiguration { get; set; }
-        private readonly RealSenseFactory factory;
+        private readonly DeterminerDataFactory factory;
 
-        private SkeletonComponent(RealSenseFactory factory)
+        private SkeletonComponent(DeterminerDataFactory factory)
         {
             this.factory = factory;
         }
@@ -33,7 +33,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
         private SkeletonsDeterminerData.Builder GetSkeletonsData(PXCMPersonTrackingData trackingData)
         {
-            return factory.Data.Determiner.Skeletons().WithSkeletons(
+            return factory.Skeletons().WithSkeletons(
                 GetIndividualSkeletons(trackingData).Select(GetIndividualSkeletonData));
         }
 
@@ -48,7 +48,7 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
         private SkeletonDeterminerData.Builder GetIndividualSkeletonData(PXCMPersonTrackingData.Person skeleton)
         {
-            SkeletonDeterminerData.Builder skeletonDeterminerData = factory.Data.Determiner.Skeleton();
+            SkeletonDeterminerData.Builder skeletonDeterminerData = factory.Skeleton();
             skeletonDeterminerData.WithSkeletonPoints(GetSkeletonPoints(skeleton));
             skeletonDeterminerData.WithPersonId(GetPersonId(skeleton));
             return skeletonDeterminerData;
@@ -70,16 +70,16 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
 
         public class Builder
         {
-            private RealSenseFactory factory;
+            private DeterminerDataFactory factory;
 
             public SkeletonComponent Build()
             {
                 return new SkeletonComponent(factory);
             }
 
-            public Builder WithFactory(RealSenseFactory factory)
+            public Builder WithFactory(DeterminerDataFactory factory)
             {
-                this.factory = factory;
+                this.factory = factory; // TODO: Nur data factory
                 return this;
             }
         }
