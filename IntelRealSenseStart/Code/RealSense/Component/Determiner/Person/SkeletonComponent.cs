@@ -57,8 +57,8 @@ namespace IntelRealSenseStart.Code.RealSense.Component.Determiner.Person
         private PXCMPersonTrackingData.PersonJoints.SkeletonPoint[] GetSkeletonPoints(PXCMPersonTrackingData.Person skeleton)
         {
             PXCMPersonTrackingData.PersonJoints personJointData = skeleton.QuerySkeletonJoints();
-            PXCMPersonTrackingData.PersonJoints.SkeletonPoint[] joints;
-            personJointData.QueryJoints(out joints);
+            PXCMPersonTrackingData.PersonJoints.SkeletonPoint[] joints = new PXCMPersonTrackingData.PersonJoints.SkeletonPoint[personJointData.QueryNumJoints()];
+            personJointData.QueryJoints(joints);
             return joints;
         }
 
